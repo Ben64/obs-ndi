@@ -9,10 +9,11 @@ EXPOSE 5901 6901 4455
 # Set environment variables
 ENV VNC_PASSWD=headless
 ENV NVIDIA_DRIVER_CAPABILITIES="compute,video,utility"
+ENV LIBVA_DRIVER_NAME=iHD
 
 # Install dependencies and clean up
 RUN apt-get update && \
-    apt-get install -y avahi-daemon xterm git build-essential cmake curl ffmpeg git libboost-dev libnss3 mesa-utils qtbase5-dev strace x11-xserver-utils net-tools python3 python3-numpy scrot wget vlc jq udev unrar qt5-image-formats-plugins software-properties-common && \
+    apt-get install -y avahi-daemon xterm git build-essential cmake curl git libboost-dev libnss3 mesa-utils qtbase5-dev strace x11-xserver-utils net-tools python3 python3-numpy scrot wget vlc jq udev unrar qt5-image-formats-plugins software-properties-common intel-media-va-driver-non-free libigdgmm12 va-driver-all library-va-utils vainfo && \
     add-apt-repository -y ppa:obsproject/obs-studio && \
     apt-get update && \
     apt-get install -y ffmpeg obs-studio && \
@@ -23,10 +24,12 @@ RUN apt-get update && \
     chown -R headless:headless /config /root/.config /home/headless/.vnc && \
     sed -i 's/geteuid/getppid/' /usr/bin/vlc && \
     ln -s /config/obs-studio/ /root/.config/obs-studio && \
-    wget -q -O /tmp/libndi4_4.5.1-1_amd64.deb https://github.com/obs-ndi/obs-ndi/releases/download/4.11.1/libndi5_5.5.3-1_amd64.deb && \
-    wget -q -O /tmp/obs-ndi-4.10.0-Ubuntu64.deb https://github.com/obs-ndi/obs-ndi/releases/download/4.11.1/obs-ndi-4.11.1-linux-x86_64.deb && \
+    wget -q -O /tmp/distroav.deb https://github.com/DistroAV/DistroAV/releases/download/6.2.1/distroav-6.2.1-x86_64-linux-gnu.deb && \
+    wget -q -O /tmp/libndi-get.sh https://raw.githubusercontent.com/DistroAV/DistroAV/master/CI/libndi-get.sh && \
+    chmod +x /tmp/libndi-get.sh && \
+    cd /tmp && ./libndi-get.sh && \
     dpkg -i /tmp/*.deb && \
-    rm -rf /tmp/*.deb
+    rm -rf /tmp/*
 
 VOLUME ["/config"]
 COPY service-start.sh /dockerstartup/service-start.sh
