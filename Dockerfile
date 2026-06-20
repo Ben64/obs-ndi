@@ -27,7 +27,7 @@ RUN apt-get update && \
     wget -q -O /tmp/distroav.deb https://github.com/DistroAV/DistroAV/releases/download/6.2.1/distroav-6.2.1-x86_64-linux-gnu.deb && \
     wget -q -O /tmp/libndi-get.sh https://raw.githubusercontent.com/DistroAV/DistroAV/master/CI/libndi-get.sh && \
     chmod +x /tmp/libndi-get.sh && \
-    cd /tmp && ./libndi-get.sh && \
+    cd /tmp && ./libndi-get.sh install && \
     dpkg -i /tmp/*.deb && \
     rm -rf /tmp/*
 
