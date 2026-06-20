@@ -13,7 +13,7 @@ ENV LIBVA_DRIVER_NAME=iHD
 
 # Install dependencies and clean up
 RUN apt-get update && \
-    apt-get install -y avahi-daemon xterm git build-essential cmake curl git libboost-dev libnss3 mesa-utils qtbase5-dev strace x11-xserver-utils net-tools python3 python3-numpy scrot wget vlc jq udev unrar qt5-image-formats-plugins software-properties-common intel-media-va-driver-non-free libigdgmm12 va-driver-all library-va-utils vainfo && \
+    apt-get install -y avahi-daemon xterm git build-essential cmake curl git libboost-dev libnss3 mesa-utils qtbase5-dev strace x11-xserver-utils net-tools python3 python3-numpy scrot wget vlc jq udev unrar qt5-image-formats-plugins software-properties-common intel-media-va-driver-non-free libigdgmm12 va-driver-all vainfo && \
     add-apt-repository -y ppa:obsproject/obs-studio && \
     apt-get update && \
     apt-get install -y ffmpeg obs-studio && \
